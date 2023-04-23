@@ -9,11 +9,36 @@ Trong bài này bạn chỉ cần viết hàm evaluateFractionString. Chương t
  dòng tiếp theo mỗi dòng chứa 1 xâu phân số. Chương trình test sẽ in kết quả ra stdout tương ứng trên n
  dòng.
  ========================================================================================================================================================================
-Test	                                                                        Input                             	Result
-int n;
-cin >> n;                                                                     2
-cin.ignore();                                                                 1/(2                                Caught Bad fraction string.
-for (int i = 0; i < n; i++) {                                                 2/3                                 0.67
+                                               Input                             	Result
+                                               2
+                                               1/(2                               Caught Bad fraction string.
+                                               2/3                                0.67
+ =====================================================================================================================================================================*/
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+double evaluateFractionString(string fraction){
+    //Tạo một đối tượng stringstream từ xâu đầu vào để trích xuất a và b
+    stringstream ss(fraction);
+    //Các thành phần đc yêu cầu 
+    int a, b;
+    char c;
+
+    // Đọc a, /, b từ stringstream
+    if (!(ss >> a >> c >> b) || c != '/')   throw "Bad fraction string.";
+    
+    double result = (double)a*1.0 / b;
+    
+    return result;
+}
+
+int main(){
+ int n;
+ cin >> n;
+ cin.ignore();
+ for (int i = 0; i < n; i++) {
     string line;
     getline(cin, line);
     // fflush(stdin);
@@ -23,24 +48,6 @@ for (int i = 0; i < n; i++) {                                                 2/
     } catch (const char* str){
         cout << "Caught " << str << endl;
     }
+  }
 }
- =====================================================================================================================================================================*/
 
-double evaluateFractionString(string fraction) {
-    // Tạo một đối tượng stringstream từ xâu đầu vào để trích xuất a và b
-    stringstream ss(fraction);
-
-    int a, b;
-    char c;
-
-    // Đọc a, /, b từ stringstream
-    if (!(ss >> a >> c >> b) || c != '/') {
-        throw "Bad fraction string.";
-    }
-
-    // Tính giá trị của phân số
-    double result = static_cast<double>(a) / b;
-
-    // Trả về giá trị tính được
-    return result;
-}
