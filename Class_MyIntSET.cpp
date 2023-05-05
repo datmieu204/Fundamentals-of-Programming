@@ -43,10 +43,79 @@ sort(res.begin(), res.end());
 for(int i = res.size() - 1; i >= 0; i--) cout << res[i] << " ";
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-#include<iostream>
+class MyIntSet{
+private:
+    int maxSize;
+    int* elements;
+    int num;
+public:
+    MyIntSet(){
+        num = 0;
+        elements = new int[100000];
+    }
 
-using namespace std;
+    MyIntSet(int a[], int n){
+        num = n;
+        elements = new int[num+5];
+        for(int i = 0; i < n; i++) elements[i] = a[i];
+    }
 
+    ~MyIntSet(){
+        delete[] elements;
+    }
+
+    bool findVal(int v) const{
+        for(int i = 0; i < num; i++){
+            if(elements[i] == v) return true;
+        }
+        return false;
+    }
+
+    bool insertVal(int v){
+       for(int i = 0; i < num; i++) if(elements[i] == v) return false;
+       elements[num] = v;
+       num++;
+       return 1;
+    }
+
+    bool eraseVal(int v){
+        for(int i= 0; i < num; i++){
+            if(elements[i] == v) {
+                num--;
+                elements[i] = elements[num];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void clearAll(){
+        num = 0;
+    }
+
+
+    bool isEmpty() const{
+        return num == 0;
+    }
+
+
+    int getSize() const{
+        return num;
+    }
+
+    const int* getBeginPtr() const{
+        return elements;
+    }
+
+    const int* getEndPtr() const{
+        return elements + num - 1;
+    }
+};
+
+
+//=======================================================================================================================================================================
+
+//Cách 2:
 class MyIntSet{
 public:
     MyIntSet(){
