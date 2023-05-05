@@ -43,86 +43,92 @@ sort(res.begin(), res.end());
 for(int i = res.size() - 1; i >= 0; i--) cout << res[i] << " ";
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#include<iostream>
+
+using namespace std;
+
 class MyIntSet{
 public:
-    //Hàm cấp phát bộ nhớ
     MyIntSet(){
-      maxSize = 100;
-      num = 0 ;
-      elements = new int[maxSize];
+        maxSize = 100;
+        num = 0;
+        elements = new int[maxSize];
     }
 
-    //Hàm khởi tạo 
     MyIntSet(int a[], int n){
         maxSize = n + 100;
         num = n;
         elements = new int[maxSize];
-        for(int i = 0 ; i < n ; i++) elements[i] = a[i];
+        for(int i = 0; i < maxSize; i++) elements[i] = a[i];
     }
 
-    //Hàm giải phóng 
-    ~MyIntSet() {
+    ~MyIntSet(){
         delete[] elements;
     }
 
-    /*thêm giá trị v vào tập hợp.(giá trị v đã có) thì trả về false.
-    Mảng đầy thì cấp phát kích thước mới maxSize = maxSize * 2 + 1 */
-    bool insertVal(int v){
-        if(findVal(v)) return  false;
-        if(num >= maxSize){
-          int *newElements = new int[maxSize*2+1];
-          for(int i=0 ; i< num ; i++) newElements[i] = elements[i];
-          delete[] elements;
-          elements = newElements;
-          maxSize = maxSize*2+1;
+    bool findVal(int v) const{
+        for(int i = 0; i < num; i++){
+            if(elements[i] == v) return true;
         }
+        return false;
+    }
+
+    bool insertVal(int v){
+        //giá trị v đã có 
+        if(findVal(v)) return false;
+        //khi mảng đầy
+        if(num >= maxSize){
+            //cấp phát kích thước mới cho mảng 
+            int *newElements = new int[maxSize*2+1];
+
+            //cập nhật phần tử cho mảng mới 
+            for(int i = 0; i < num ; i++) newElements[i] = elements[i];
+
+            //xóa mảng cũ đi
+            delete[] elements;
+
+            //câph nhật giá trị maxSize và mảng mới 
+            elements = newElements;
+            maxSize = maxSize*2 + 1;
+        }
+
+        //thêm v vào tập hợp 
         elements[num++] = v;
         return true;
     }
 
-    //xóa giá trị v khỏi tập hợp.(giá trị v chưa có) thì trả về false.
     bool eraseVal(int v){
-      for(int i = 0; i < num; i++){
-        if(elements[i] == v) {
-          num--;
-          elements[i] = elements[num];
-          return true;
+        for(int i= 0; i < num; i++){
+            if(elements[i] == v) {
+                num--;
+                elements[i] = elements[num];
+                return true;
+            }
         }
-      }
-      return false;
+        return false;
     }
 
-    //xóa tất cả các giá trị trong tập hợp.
     void clearAll(){
-       num = 0;
+        num = 0;
     }
 
-    //kiểm tra xem v có trong tập hợp không.
-    bool findVal(int v) const{
-      for(int i = 0; i < num ; i++){
-        if(elements[i] == v) return true;
-      }
-      return false;
-    }
 
-    //Kiểm tra tập hợp rỗng 
     bool isEmpty() const{
-      return (num == 0);
+        return num == 0;
     }
 
-    //hàm trả về kích thước 
+
     int getSize() const{
-      return num;
+        return num;
     }
 
     const int* getBeginPtr() const{
-      return elements;
+        return elements;
     }
 
     const int* getEndPtr() const{
-      return elements + num - 1;
+        return elements + num - 1;
     }
-
 private:
     int maxSize;
     int* elements;
