@@ -1,3 +1,16 @@
+/*Viết một chương trình nhận vào một số nguyên N
+, trả về kết quả là một số nguyên lớn nhất thỏa mãn:
+
+- Tổng các chữ số của chúng là N;
+
+- Mỗi chữ số chỉ xuất hiện một lần.
+
+Trường hợp không thể đáp ứng điều kiện trên (N>45 hoặc N<0), trả về "None" (không có dấu ngoặc).
+VD N = 45 -> 9876543210
+   N = 7  -> 4210
+*/
+
+
 #include<bits/stdc++.h>
 
 using namespace std;
