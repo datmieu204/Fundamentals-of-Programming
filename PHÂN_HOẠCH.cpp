@@ -54,3 +54,56 @@ int main(){
     }
     return 0;
 }
+
+
+//===================================================================================================================================================================
+//Đệ Quy
+
+#include <iostream>
+using namespace std;
+
+void find_sequences(int n, int max_val, string seq) {
+    if (n == 0) {
+        cout << seq << endl;
+        return;
+    }
+    for (int i = min(max_val, n); i >= 1; i--) {
+        find_sequences(n - i, i, seq + to_string(i) + " ");
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+    find_sequences(n, n, "");
+    return 0;
+}
+
+//=================================================================================================================================================================
+//Cách khác 
+
+#include<iostream>
+
+using namespace std;
+
+int n;
+int a[10000];
+void print(int a[], int n){
+    for(int i = 0; i < n; i++) cout << a[i]<<" ";
+    cout << endl;
+}
+void sd(int tg, int k, int e){
+    for(int i = e; i > 0; i--)
+        if(tg-i >= 0){
+            tg-=i;
+            a[k] = i;
+            if(tg == 0) print(a,k+1);
+            else sd(tg, k+1, i);
+            tg+=i;
+        }
+}
+
+int main(){
+    cin >> n;
+    sd(n,0, n);
+}
